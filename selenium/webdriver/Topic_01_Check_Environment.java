@@ -14,6 +14,9 @@ public class Topic_01_Check_Environment {
         driver = getDriver("firefox");
         driver.get("https://www.facebook.com/");
         driver.quit();
+        // new comment
+        // new comment
+
     }
 
     @Test
@@ -31,13 +34,11 @@ public class Topic_01_Check_Environment {
     }
 
     public WebDriver getDriver(String driver ) {
-        WebDriver webDriver;
-        switch (driver) {
-            case "chrome": webDriver = new ChromeDriver(); break;
-            case "firefox": webDriver = new FirefoxDriver(); break;
-            case "edge": webDriver = new EdgeDriver(); break;
-            default: webDriver = new ChromeDriver(); break;
-        }
-        return webDriver;
+        return switch (driver) {
+            case "chrome" -> new ChromeDriver();
+            case "firefox" -> new FirefoxDriver();
+            case "edge" -> new EdgeDriver();
+            default -> throw new IllegalArgumentException("Invalid driver");
+        };
     }
 }
