@@ -14,4 +14,4 @@ jobs:
           curl -X POST \
             "https://subjective-font-search-frame.trycloudflare.com/job/Build%20A/buildWithParameters" \
             --user "admin:11b7d93b7140db76c2723cddd136787041" \
-            --data-urlencode "BRANCH=main"
+            --data-urlencode "BRANCH=feature"
