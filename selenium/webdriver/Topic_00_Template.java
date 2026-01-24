@@ -17,6 +17,7 @@ public class Topic_00_Template {
     {
         driver = new FirefoxDriver();
         driver.get("hhttps://www.nopcommerce.com/en");
+        //test
     }
 
     @AfterClass
