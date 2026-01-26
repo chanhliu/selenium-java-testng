@@ -12,6 +12,6 @@ jobs:
       - name: Trigger Jenkins Job
         run: |
           curl -X POST \
-            "https://subjective-font-search-frame.trycloudflare.com/job/Build%20A/buildWithParameters" \
-            --user "admin:11b7d93b7140db76c2723cddd136787041" \
+            "${{ vars.JENKINS_URL}}/job/${{ vars.JENKINS_JOB }}/buildWithParameters" \
+            --user "${{ vars.JENKINS_USER }}:${{ vars.JENKINS_TOKEN }}" \
             --data-urlencode "BRANCH=feature"
