@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Say hello
-        run: echo "Hello from GitHub Actions ${{JENKINS_URL}}"
+        run: echo "Hello from GitHub Actions ${{ vars.JENKINS_URL }}"
       - name: Ping Jenkins
         run: curl https://subjective-font-search-frame.trycloudflare.com
