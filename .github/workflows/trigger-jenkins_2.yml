@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Trigger Jenkins Job
         run: |
-          curl -X POST \
-            "${{ vars.JENKINS_URL}}/job/${{ vars.JENKINS_JOB }}/buildWithParameters" \
+          curl -X POST "${{ vars.JENKINS_URL}}/job/${{ vars.JENKINS_JOB }}/buildWithParameters" \
             --user "${{ vars.JENKINS_USER }}:${{ vars.JENKINS_TOKEN }}" \
             --data-urlencode "BRANCH=feature"
