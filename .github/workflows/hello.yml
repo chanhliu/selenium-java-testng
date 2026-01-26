@@ -1,12 +1,12 @@
 name: Hello Actions
 
 on:
-  push:
   workflow_dispatch:
 
 jobs:
   demo:
     runs-on: ubuntu-latest
+    environment: STAGING
     steps:
       - name: Say hello
         run: echo "Hello from GitHub Actions ${{ vars.JENKINS_URL }}"
