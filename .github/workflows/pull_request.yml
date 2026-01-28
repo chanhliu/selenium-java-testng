@@ -1,4 +1,4 @@
-name: Trigger Jenkins with params
+name: Pull Request trigger
 
 on:
   push:            # cứ có commit là chạy (dễ test nhất)
