@@ -21,4 +21,4 @@ jobs:
             --user "${{ vars.JENKINS_USER }}:${{ vars.JENKINS_TOKEN }}" \
             --data-urlencode "BRANCH=feature" \
             --data-urlencode "SUITE=smoke_test"
-        # nothing
+        # nothing 1
