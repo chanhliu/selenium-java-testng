@@ -1,7 +1,14 @@
 name: Trigger Jenkins with params
 
 on:
-  #push:            # cứ có commit là chạy (dễ test nhất)
+  push:            # cứ có commit là chạy (dễ test nhất)
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
   workflow_dispatch:   # cho phép bấm chạy tay
 
 jobs:
@@ -13,4 +20,4 @@ jobs:
           curl -X POST "${{ vars.JENKINS_URL}}/job/${{ vars.JENKINS_JOB }}/buildWithParameters" \
             --user "${{ vars.JENKINS_USER }}:${{ vars.JENKINS_TOKEN }}" \
             --data-urlencode "BRANCH=feature"
-            --data-urlencode "BRANCH=feature"
+            --data-urlencode "SUITE=smoke_test"
