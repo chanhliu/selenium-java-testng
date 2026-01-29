@@ -29,7 +29,7 @@ jobs:
       - name: Trigger Jenkins Job
         env:
           JENKINS_USER: ${{ vars.JENKINS_USER }}
-          JENKINS_API_TOKEN: ${{ vars.JENKINS_API_TOKEN }}
+          JENKINS_API_TOKEN: ${{ vars.JENKINS_TOKEN }}
           JENKINS_BASE_URL: ${{ vars.JENKINS_URL }}
           JENKINS_JOB: ${{ vars.JENKINS_JOB }}
           BRANCH: ${{ inputs.branch }}
