@@ -40,7 +40,6 @@ jobs:
           set -euo pipefail
           AUTH="${JENKINS_USER}:${JENKINS_API_TOKEN}"
 
-        # 1. Trigger jenkins job
           RESP_QUEUE="$(curl -sS -X POST \
           "${JENKINS_BASE_URL}/job/${JENKINS_JOB}/buildWithParameters" \
           --user "$AUTH" \
@@ -59,21 +58,18 @@ jobs:
             
             BUILD_URL="$(echo "$RESP" | jq -r '.executable.url // empty')"
                
-          # Kiểm tra nếu có dữ liệu thì break
             if [[ -n "$BUILD_URL" ]]; then
               break
             fi
             sleep 1
           done
             
-          # Kiểm tra nếu undefined hoặc empty string thì báo lỗi
           if [[ -z "${BUILD_URL:-}" ]]; then
             echo "ERROR: timed out waiting for executable URL from queue"
             exit 1
           fi
              
           BUILD_API="${BUILD_URL}api/json"
-          # 3) Poll build until result != null
           for i in {1..900}; do
             BUILD_RESP="$(curl -sS "$BUILD_API" --user "$AUTH")"
             echo "BUILD_RESP=$BUILD_RESP"
@@ -92,7 +88,6 @@ jobs:
             exit 1
           fi
 
-          # 4) Fail workflow if Jenkins build failed
           if [[ "$RESULT" != "SUCCESS" ]]; then
             echo "Jenkins build failed: $RESULT"
             exit 1
