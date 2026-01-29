@@ -46,8 +46,9 @@ jobs:
           --data-urlencode "BRANCH=${BRANCH}" \
           --data-urlencode "SUITE=${SUITE}" \
           -D - -o /dev/null)"
-  
-          QUEUE_URL="$(echo "$RESP_QUEUE" | awk 'BEGIN{IGNORECASE=1} /^location:/{print $2}' | tr -d '\r')"
+          
+          echo  "RESP_QUEUE: $RESP_QUEUE"
+          QUEUE_URL=$(echo "$RESP_QUEUE" | grep -i location | awk '{print $2}' | tr -d '\r')
           echo "QUEUE_URL=$QUEUE_URL"
           QUEUE_API="${QUEUE_URL}api/json?tree=executable%5Bnumber,url%5D"
              
