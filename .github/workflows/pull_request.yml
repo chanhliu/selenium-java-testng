@@ -57,20 +57,22 @@ jobs:
             RESP="$(curl -sS "$QUEUE_API" --user "$AUTH")"
             echo "QUEUE_API_RESP=$RESP"
             
-            BUILD_URL="$(echo "$RESP" | jq -r '.executable.url // empty')"
+            BUILD_NUMBER="$(echo "$RESP" | jq -r '.executable.number // empty')"
                
-            if [[ -n "$BUILD_URL" ]]; then
+            if [[ -n "$BUILD_NUMBER" ]]; then
               break
             fi
             sleep 1
           done
             
-          if [[ -z "${BUILD_URL:-}" ]]; then
+          if [[ -z "${BUILD_NUMBER:-}" ]]; then
             echo "ERROR: timed out waiting for executable URL from queue"
             exit 1
           fi
-             
-          BUILD_API="${BUILD_URL}api/json"
+          
+           
+          BUILD_API="${JENKINS_BASE_URL}/job/${JENKINS_JOB}/${BUILD_NUMBER}/api/json"
+          echo "BUILD-API:  ${BUILD_API}"
           for i in {1..900}; do
             BUILD_RESP="$(curl -sS "$BUILD_API" --user "$AUTH")"
             echo "BUILD_RESP=$BUILD_RESP"
