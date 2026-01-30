@@ -10,17 +10,17 @@ on:
       - synchronize
       - reopened
   workflow_dispatch:   # cho phép bấm chạy tay
-    inputs:
-      branch:
-        description: "Branch to run"
-        type: string
-        required: true
-        default: "feature"
-      suite:
-        description: "Test suite to run"
-        type: string
-        required: true
-        default: "smoke_test"
+#    inputs:
+#      branch:
+#        description: "Branch to run"
+#        type: string
+#        required: true
+#        default: "feature"
+#      suite:
+#        description: "Test suite to run"
+#        type: string
+#        required: true
+#        default: "smoke_test"
 
 jobs:
   trigger:
@@ -32,8 +32,6 @@ jobs:
           JENKINS_API_TOKEN: ${{ vars.JENKINS_TOKEN }}
           JENKINS_BASE_URL: ${{ vars.JENKINS_URL }}
           JENKINS_JOB: ${{ vars.JENKINS_JOB }}
-          BRANCH: ${{ inputs.branch }}
-          SUITE: ${{ inputs.suite }}
 
         shell: bash
         run: |
@@ -43,8 +41,8 @@ jobs:
           RESP_QUEUE="$(curl -sS -X POST \
           "${JENKINS_BASE_URL}/job/${JENKINS_JOB}/buildWithParameters" \
           --user "$AUTH" \
-          --data-urlencode "BRANCH=${BRANCH}" \
-          --data-urlencode "SUITE=${SUITE}" \
+          --data-urlencode "BRANCH=feature" \
+          --data-urlencode "SUITE=smoke_test" \
           -D - -o /dev/null)"
           
           echo  "RESP_QUEUE: $RESP_QUEUE"
@@ -78,6 +76,7 @@ jobs:
             echo "BUILD_RESP=$BUILD_RESP"
             
             RESULT="$(echo "$BUILD_RESP" | jq -r '.result // empty')"
+            [[ "$BUILD_RESP" == *"\"result\":null"* ]] || break
             if [[ -n "$RESULT" ]]; then
               echo "FINAL_RESULT=$RESULT"
               break
