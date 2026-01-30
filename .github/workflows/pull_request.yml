@@ -35,5 +35,6 @@ jobs:
 
         shell: bash
         run: |
+          pwd
           chmod +x trigger.sh
           trigger.sh
