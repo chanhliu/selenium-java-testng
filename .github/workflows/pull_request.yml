@@ -10,14 +10,33 @@ on:
       - synchronize
       - reopened
   workflow_dispatch:   # cho phép bấm chạy tay
+#    inputs:
+#      branch:
+#        description: "Branch to run"
+#        type: string
+#        required: true
+#        default: "feature"
+#      suite:
+#        description: "Test suite to run"
+#        type: string
+#        required: true
+#        default: "smoke_test"
 
 jobs:
   trigger:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Trigger Jenkins Job
+        env:
+          JENKINS_USER: ${{ vars.JENKINS_USER }}
+          JENKINS_API_TOKEN: ${{ vars.JENKINS_TOKEN }}
+          JENKINS_BASE_URL: ${{ vars.JENKINS_URL }}
+          JENKINS_JOB: ${{ vars.JENKINS_JOB }}
+
+        shell: bash
         run: |
-          curl -X POST "${{ vars.JENKINS_URL}}/job/${{ vars.JENKINS_JOB }}/buildWithParameters" \
-            --user "${{ vars.JENKINS_USER }}:${{ vars.JENKINS_TOKEN }}" \
-            --data-urlencode "BRANCH=feature" \
-            --data-urlencode "SUITE=smoke_test"
+          pwd
+          ls -l
+          chmod +x trigger.sh
+          ./trigger.sh
