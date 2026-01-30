@@ -39,4 +39,4 @@ jobs:
           pwd
           ls -l
           chmod +x trigger.sh
-          trigger.sh
+          ./trigger.sh
